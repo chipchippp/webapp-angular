@@ -15,7 +15,7 @@
                         name="phone"
                         (focus)="registerForm.form.markAllAsTouched()"
                         placeholder="Số điện thoại"
-                        id="phone">
+                        id="phone">                    
                         <div class="divider-nospace"></div>
                         <p class="text-danger" *ngIf="phone.length < 10 && registerForm.form.touched">Phone phải ít 10 kí tự</p>
                     </div>
@@ -26,23 +26,26 @@
                         required
                         name="password"
                         (focus)="registerForm.form.markAllAsTouched()"
-
                         [(ngModel)]="password"
                         class="form-control" id="password">
                         <i class="password-toggle fas fa-eye-slash"></i>
                         <div class="divider-nospace"></div>
-                        <p class="text-danger" *ngIf="phone.length < 3 && registerForm.form.touched">Phone phải ít 10 kí tự</p>
+                        <p class="text-danger" *ngIf="password.length < 3 && registerForm.form.touched">Password phải ít 3 kí tự</p>
                     
                     </div>
                     <div class="mt-3"></div>
                     <div class="form-group password-field">
-                        <label for="confirm-password">Gõ lại mật khẩu</label>
+                        <label for="confirmPassword">Gõ lại mật khẩu</label>
                         <input type="password" placeholder="Ít nhất 3 ký tự" 
                         required
+                        name="confirmPassword"
                         [(ngModel)]="confirmPassword"
-                        class="form-control" id="confirm-password">
+                        (input)="registerForm.form.markAllAsTouched(); checkPassword()"
+                        class="form-control" id="confirmPassword">
                         <i class="password-toggle fas fa-eye-slash"></i>
                         <div class="divider-nospace"></div>
+                        <p class="text-danger" *ngIf="password.length < 3 && registerForm.form.touched">Password phải ít 3 kí tự</p>
+                        <p class="text-danger" *ngIf="registerForm.controls['confirmPassword'].hasError('passwordMatch') && registerForm.form.touched">Password không khớp</p>
                     </div>
                     <div class="mt-3"></div>
                     <div class="form-group">
@@ -60,9 +63,13 @@
                         <input type="date"  class="form-control"
                         required
                         [(ngModel)]="dateOfBirth"
+                        name="dateOfBirth"
+                        (input)="registerForm.form.markAllAsTouched(); checkAge()"
                         placeholder="Ngày tháng năm sinh"
                          id="dateOfBirth">
                         <div class="divider-nospace"></div>
+                        <p class="text-danger" *ngIf="registerForm.controls['dateOfBirth'].hasError('invalidAge') && registerForm.form.touched">Bạn chưa đủ 18 tuổi</p>
+
                     </div>
                     <div class="mt-3"></div>
                     <div class="form-group">
